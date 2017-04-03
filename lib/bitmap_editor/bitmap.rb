@@ -16,6 +16,10 @@ module BitmapEditor
       end
     end
 
+    def set_cell(x, y, val)
+      set(x, x, y, y, val)
+    end
+
     def clear
       fill(EMPTY_VALUE)
     end
@@ -41,7 +45,7 @@ module BitmapEditor
       errors << "minimum y (#{y_min}) cannot be less than 1" if (y_min < 1)
       errors << "maximum y (#{y_max}) cannot be greater than #{@height}" if (y_max > @height)
 
-      raise errors.join('') if !errors.empty?
+      raise errors.join(', ') if !errors.empty?
     end
   end
 end
