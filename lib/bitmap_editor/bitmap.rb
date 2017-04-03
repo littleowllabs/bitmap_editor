@@ -1,5 +1,5 @@
 module BitmapEditor
-  EMPTY_VALUE = 0
+  EMPTY_VALUE = 'O'
 
   class Bitmap
     def initialize(width, height, initial_value = EMPTY_VALUE)
