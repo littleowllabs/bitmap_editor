@@ -20,6 +20,14 @@ module BitmapEditor
       set(x, x, y, y, val)
     end
 
+    def set_vertical_segment(x, y1, y2, val)
+      set(x, x, y1, y2, val)
+    end
+
+    def set_horizontal_segment(x1, x2, y, val)
+      set(x1, x2, y, y, val)
+    end
+
     def clear
       fill(EMPTY_VALUE)
     end
