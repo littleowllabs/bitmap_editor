@@ -1,10 +1,13 @@
 module BitmapEditor
-  EMPTY_VALUE = 'O'
-
   class Bitmap
+    EMPTY_VALUE = 'O'
+    MAX_SIZE = 250
+
     def initialize(width, height, initial_value = EMPTY_VALUE)
       @width = width
       @height = height
+      validate_size
+
       @matrix = Array.new(height) { Array.new(width, initial_value) }
     end
 
@@ -49,6 +52,15 @@ module BitmapEditor
     end
 
     private
+
+    def validate_size
+      errors = []
+      errors << "width (#{@width}) must be a positive, non-zero integer" if (@width < 1)
+      errors << "height (#{@height}) must be a positive, non-zero integer" if (@height < 1)
+      errors << "width (#{@width}) cannot be greater than #{MAX_SIZE}" if (@width > MAX_SIZE)
+      errors << "height (#{@height}) cannot be greater than #{MAX_SIZE}" if (@height > MAX_SIZE)
+      raise errors.join(', ') if !errors.empty?
+    end
 
     def validate_range(x_min, x_max, y_min, y_max)
       errors = []

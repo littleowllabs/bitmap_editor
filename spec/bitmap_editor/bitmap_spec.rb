@@ -1,15 +1,63 @@
 RSpec.describe BitmapEditor::Bitmap do
   describe 'initialise' do
-    subject { bitmap.to_s }
+    context 'with valid values' do
+      subject { bitmap.to_s }
 
-    context 'with the default empty value' do
-      let(:bitmap) { described_class.new(2, 3) }
-      it { is_expected.to eq("OO\nOO\nOO") }
+      context 'with the default empty value' do
+        let(:bitmap) { described_class.new(2, 3) }
+        it { is_expected.to eq("OO\nOO\nOO") }
+      end
+
+      context 'with a specified fill value' do
+        let(:bitmap) { described_class.new(2, 3, 'A') }
+        it { is_expected.to eq("AA\nAA\nAA") }
+      end
     end
 
-    context 'with a specified fill value' do
-      let(:bitmap) { described_class.new(2, 3, 'A') }
-      it { is_expected.to eq("AA\nAA\nAA") }
+    context 'with invalid values' do
+      let(:width) { 1 }
+      let(:height) { 1 }
+      subject { described_class.new(width, height) }
+
+      context 'when the width is less than 1' do
+        let(:width) { 0 }
+
+        it 'raises an error' do
+          expect { subject }.to raise_error(
+            RuntimeError, "width (#{width}) must be a positive, non-zero integer"
+          )
+        end
+      end
+
+      context 'when the width is greater than the maximum allowed' do
+        let(:width) { BitmapEditor::Bitmap::MAX_SIZE + 1 }
+
+        it 'raises an error' do
+          expect { subject }.to raise_error(
+            RuntimeError, "width (#{width}) cannot be greater than #{BitmapEditor::Bitmap::MAX_SIZE}"
+          )
+        end
+      end
+
+      context 'when the height is less than 1' do
+        let(:height) { 0 }
+
+        it 'raises an error' do
+          expect { subject }.to raise_error(
+            RuntimeError, "height (#{height}) must be a positive, non-zero integer"
+          )
+        end
+      end
+
+      context 'when the height is greater than the maximum allowed' do
+        let(:height) { BitmapEditor::Bitmap::MAX_SIZE + 1 }
+
+        it 'raises an error' do
+          expect { subject }.to raise_error(
+            RuntimeError, "height (#{height}) cannot be greater than #{BitmapEditor::Bitmap::MAX_SIZE}"
+          )
+        end
+      end
     end
   end
 
