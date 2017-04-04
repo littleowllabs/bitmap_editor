@@ -1,9 +1,10 @@
 RSpec.describe BitmapEditor::Main do
   describe '#modify_bitmap' do
     describe 'I M N' do
-      subject { BitmapEditor::Main.modify_bitmap('I 3 3') }
-
-      it { is_expected.to be_instance_of(BitmapEditor::Bitmap) }
+      it 'sends the create instruction on to the bitmap' do
+        expect(BitmapEditor::Bitmap).to receive(:new).with(3, 3)
+        BitmapEditor::Main.modify_bitmap('I 3 3')
+      end
     end
 
     describe 'C' do
