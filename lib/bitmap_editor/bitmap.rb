@@ -38,6 +38,10 @@ module BitmapEditor
       end
     end
 
+    def print
+      puts to_s
+    end
+
     def to_s
       @matrix.map do |row|
         row.join('')
